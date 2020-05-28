@@ -31,7 +31,7 @@ Requirements - https://laravel.com/docs/7.x/installation#server-requirements
 ### Setting
 * Переименовываем `.env.example` в `.env`
 * Настраниваем `.env` (соединение с БД)
-* Генерируем ключ, выполняем миграцию, заполняем БД
+* Генерируем ключ, выполняем миграцию, заполняем БД ...
     ```bash
     php artisan key:generate
     php artisan migrate
@@ -51,6 +51,10 @@ Requirements - https://laravel.com/docs/7.x/installation#server-requirements
 * Открываем браузер по ссылке `http://localhost::8000`
 
 #### My Implementation Stack:
-* PHP XAMPP 7.3.9
-* Laravel 7.13.0
-* SQLite 3
+* PHP v7.3.9 XAMPP
+* Laravel v7.13.0
+* SQLite v3
+* composer v1.10.6
+* npm v6.14.4 (Node.js v10.16.0)
+* vue.js v2
+* tailwind css v1.4

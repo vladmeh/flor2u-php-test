@@ -25,7 +25,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/orders', function (Request $request) {
-    return new OrderCollection(Order::paginate(50));
+    return new OrderCollection(Order::paginate(10));
 });
 Route::get('/orders/{order}', function (Order $order) {
     return new OrderResource($order);

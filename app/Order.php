@@ -12,6 +12,8 @@ class Order extends Model
         'delivery_dt' => 'datetime',
     ];
 
+    protected $with = ['partner', 'products'];
+
     public function partner(): BelongsTo
     {
         return $this->belongsTo(Partner::class);

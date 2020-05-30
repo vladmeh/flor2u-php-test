@@ -2,8 +2,8 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/example.bundle.js": "/example.bundle.js",
-    "/notfound.bundle.js": "/notfound.bundle.js",
-    "/orders.bundle.js": "/orders.bundle.js",
     "/not-found.bundle.js": "/not-found.bundle.js",
-    "/order-edit.bundle.js": "/order-edit.bundle.js"
+    "/order-edit.bundle.js": "/order-edit.bundle.js",
+    "/orders.bundle.js": "/orders.bundle.js",
+    "/vendors~orders.bundle.js": "/vendors~orders.bundle.js"
 }

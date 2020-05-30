@@ -2038,6 +2038,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "App"
 });
@@ -19653,27 +19657,27 @@ var render = function() {
             "router-link",
             {
               staticClass: "no-underline text-xl text-white mr-12",
-              attrs: { to: "/" }
+              attrs: { to: { name: "home" } }
             },
-            [_vm._v("Home")]
+            [_vm._v("Главная")]
           ),
           _vm._v(" "),
           _c(
             "router-link",
             {
               staticClass: "no-underline text-xl text-white mr-12",
-              attrs: { to: "/orders" }
+              attrs: { to: { name: "order.list" } }
             },
-            [_vm._v("Orders")]
+            [_vm._v("Заказы\n            ")]
           ),
           _vm._v(" "),
           _c(
             "router-link",
             {
               staticClass: "no-underline text-xl text-white mr-12",
-              attrs: { to: "/products" }
+              attrs: { to: { name: "product.list" } }
             },
-            [_vm._v("Products")]
+            [_vm._v("Продукты\n            ")]
           )
         ],
         1
@@ -19682,8 +19686,8 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "container mx-auto py-12" },
-      [_c("router-view")],
+      { staticClass: "container mx-auto py-6" },
+      [_c("transition", { attrs: { name: "fade" } }, [_c("router-view")], 1)],
       1
     )
   ])
@@ -34964,6 +34968,13 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('currencyRub', function (value) {
+  if (!value) {
+    return '';
+  }
+
+  return value.toString().split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+});
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   router: _router__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render(h) {
@@ -35003,26 +35014,32 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var routes = [{
   path: '*',
+  name: 'notfound',
   component: function component() {
     return __webpack_require__.e(/*! import() | not-found.bundle */ "not-found.bundle").then(__webpack_require__.bind(null, /*! ./components/NotFound */ "./resources/js/components/NotFound.vue"));
   }
 }, {
   path: '/',
+  name: 'home',
   component: function component() {
     return __webpack_require__.e(/*! import() | example.bundle */ "example.bundle").then(__webpack_require__.bind(null, /*! ./components/ExampleComponent */ "./resources/js/components/ExampleComponent.vue"));
   }
 }, {
   path: '/orders',
+  name: 'order.list',
   component: function component() {
     return __webpack_require__.e(/*! import() | orders.bundle */ "orders.bundle").then(__webpack_require__.bind(null, /*! ./components/OrderList */ "./resources/js/components/OrderList.vue"));
   }
 }, {
-  path: '/orders/1',
+  path: '/orders/:id',
+  name: 'order.show',
   component: function component() {
     return __webpack_require__.e(/*! import() | order-edit.bundle */ "order-edit.bundle").then(__webpack_require__.bind(null, /*! ./components/OrderEdit */ "./resources/js/components/OrderEdit.vue"));
-  }
+  },
+  props: true
 }, {
   path: '/products',
+  name: 'product.list',
   component: function component() {
     return __webpack_require__.e(/*! import() | order-edit.bundle */ "order-edit.bundle").then(__webpack_require__.bind(null, /*! ./components/ProductList */ "./resources/js/components/ProductList.vue"));
   }

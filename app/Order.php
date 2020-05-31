@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Order extends Model
 {
+    protected $guarded = [];
+
     protected $casts = [
         'delivery_dt' => 'datetime',
     ];

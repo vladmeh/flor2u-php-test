@@ -14,18 +14,20 @@
                     <td class="px-4 py-2 font-medium" v-text="costOrder + ' руб.'"></td>
                 </tr>
             </table>
-            <div>{{ $root.shared }}</div>
             <form @submit.prevent="onSubmit">
                 <div class="mb-4">
                     <label class="block font-medium mb-2 text-gray-700" for="client_email">
                         Клиент
                     </label>
                     <input class="appearance-none border focus:border-gray-400 focus:outline-none leading-tight px-3 py-2 rounded shadow text-gray-700 w-full"
-                           name="client_email"
                            id="client_email"
-                           type="text"
+                           type="email"
                            v-model="order.client_email"
+                           required
                     >
+                    <span class="text-red-500 text-xs"
+                          v-if="form.errors.has('client_email')"
+                          v-text="form.errors.get('client_email')"></span>
                 </div>
                 <div class="mb-4">
                     <label class="block font-medium mb-2 text-gray-700" for="partner">
@@ -33,9 +35,9 @@
                     </label>
                     <div class="relative">
                         <select class="appearance-none border focus:border-gray-400 focus:outline-none leading-tight px-3 py-2 rounded shadow text-gray-700 w-full"
-                                name="partner"
                                 id="partner"
                                 v-model="order.partner_id"
+                                required
                         >
                             <option v-for="partner in $root.partners" :value="partner.id">{{ partner.name }}</option>
                         </select>
@@ -45,6 +47,10 @@
                             </svg>
                         </div>
                     </div>
+                    <span class="text-red-500 text-xs"
+                          v-if="form.errors.has('partner_id')"
+                          v-text="form.errors.get('partner_id')"></span>
+
                 </div>
                 <div class="mb-4">
                     <label class="block font-medium mb-2 text-gray-700" for="status">
@@ -54,6 +60,7 @@
                         <select class="appearance-none border focus:border-gray-400 focus:outline-none leading-tight px-3 py-2 rounded shadow text-gray-700 w-full"
                                 id="status"
                                 v-model="order.status"
+                                required
                         >
                             <option v-for="(value, key) in $root.statuses" :value="key">{{ value }}</option>
                         </select>
@@ -63,9 +70,15 @@
                             </svg>
                         </div>
                     </div>
+                    <span class="text-red-500 text-xs"
+                          v-if="form.errors.has('status')"
+                          v-text="form.errors.get('status')"></span>
+
                 </div>
                 <div class="flex justify-end">
-                    <button class="bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">Сохранить</button>
+                    <button class="bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
+                        Сохранить
+                    </button>
                 </div>
             </form>
         </div>
@@ -81,11 +94,7 @@
         data() {
             return {
                 order: null,
-                formFields: {
-                    client_email: '',
-                    partner_id: '',
-                    status: ''
-                }
+                form: new Form({}),
             }
         },
         beforeRouteEnter(to, from, next) {
@@ -105,14 +114,14 @@
             },
         },
         methods: {
-            onSubmit(){
-                let form = new Form({
+            onSubmit() {
+                this.form = new Form({
                     client_email: this.order.client_email,
                     partner_id: this.order.partner_id,
                     status: this.order.status
                 });
 
-                form.patch('/api/orders/' + this.order.id)
+                this.form.patch('/api/orders/' + this.order.id)
                     .then(response => console.log(response));
             }
         }

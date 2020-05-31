@@ -85,6 +85,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -92,11 +105,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       order: null,
-      formFields: {
-        client_email: '',
-        partner_id: '',
-        status: ''
-      }
+      form: new _utilites_Form__WEBPACK_IMPORTED_MODULE_1__["default"]({})
     };
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
@@ -123,12 +132,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onSubmit: function onSubmit() {
-      var form = new _utilites_Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
+      this.form = new _utilites_Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
         client_email: this.order.client_email,
         partner_id: this.order.partner_id,
         status: this.order.status
       });
-      form.patch('/api/orders/' + this.order.id).then(function (response) {
+      this.form.patch('/api/orders/' + this.order.id).then(function (response) {
         return console.log(response);
       });
     }
@@ -229,8 +238,6 @@ var render = function() {
             2
           ),
           _vm._v(" "),
-          _c("div", [_vm._v(_vm._s(_vm.$root.shared))]),
-          _vm._v(" "),
           _c(
             "form",
             {
@@ -263,11 +270,7 @@ var render = function() {
                   ],
                   staticClass:
                     "appearance-none border focus:border-gray-400 focus:outline-none leading-tight px-3 py-2 rounded shadow text-gray-700 w-full",
-                  attrs: {
-                    name: "client_email",
-                    id: "client_email",
-                    type: "text"
-                  },
+                  attrs: { id: "client_email", type: "email", required: "" },
                   domProps: { value: _vm.order.client_email },
                   on: {
                     input: function($event) {
@@ -277,7 +280,16 @@ var render = function() {
                       _vm.$set(_vm.order, "client_email", $event.target.value)
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.form.errors.has("client_email")
+                  ? _c("span", {
+                      staticClass: "text-red-500 text-xs",
+                      domProps: {
+                        textContent: _vm._s(_vm.form.errors.get("client_email"))
+                      }
+                    })
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-4" }, [
@@ -304,7 +316,7 @@ var render = function() {
                       ],
                       staticClass:
                         "appearance-none border focus:border-gray-400 focus:outline-none leading-tight px-3 py-2 rounded shadow text-gray-700 w-full",
-                      attrs: { name: "partner", id: "partner" },
+                      attrs: { id: "partner", required: "" },
                       on: {
                         change: function($event) {
                           var $$selectedVal = Array.prototype.filter
@@ -360,7 +372,16 @@ var render = function() {
                       )
                     ]
                   )
-                ])
+                ]),
+                _vm._v(" "),
+                _vm.form.errors.has("partner_id")
+                  ? _c("span", {
+                      staticClass: "text-red-500 text-xs",
+                      domProps: {
+                        textContent: _vm._s(_vm.form.errors.get("partner_id"))
+                      }
+                    })
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-4" }, [
@@ -391,7 +412,7 @@ var render = function() {
                       ],
                       staticClass:
                         "appearance-none border focus:border-gray-400 focus:outline-none leading-tight px-3 py-2 rounded shadow text-gray-700 w-full",
-                      attrs: { id: "status" },
+                      attrs: { id: "status", required: "" },
                       on: {
                         change: function($event) {
                           var $$selectedVal = Array.prototype.filter
@@ -447,7 +468,16 @@ var render = function() {
                       )
                     ]
                   )
-                ])
+                ]),
+                _vm._v(" "),
+                _vm.form.errors.has("status")
+                  ? _c("span", {
+                      staticClass: "text-red-500 text-xs",
+                      domProps: {
+                        textContent: _vm._s(_vm.form.errors.get("status"))
+                      }
+                    })
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _vm._m(0)
@@ -469,7 +499,7 @@ var staticRenderFns = [
           staticClass:
             "bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
         },
-        [_vm._v("Сохранить")]
+        [_vm._v("\n                    Сохранить\n                ")]
       )
     ])
   }

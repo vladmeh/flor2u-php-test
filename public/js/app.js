@@ -34962,6 +34962,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
+/* harmony import */ var _model_Partner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./model/Partner */ "./resources/js/model/Partner.js");
+
 
 
 
@@ -34976,6 +34978,22 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('currencyRub', function (value
   return value.toString().split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 });
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  data: {
+    partners: [],
+    statuses: {
+      0: "новый",
+      10: "подтвержден",
+      20: "завершен"
+    }
+  },
+  created: function created() {
+    var _this = this;
+
+    _model_Partner__WEBPACK_IMPORTED_MODULE_3__["default"].all(function (_ref) {
+      var data = _ref.data;
+      return _this.partners = data;
+    });
+  },
   router: _router__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render(h) {
     return h(_App_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
@@ -34994,6 +35012,43 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+/***/ }),
+
+/***/ "./resources/js/model/Partner.js":
+/*!***************************************!*\
+  !*** ./resources/js/model/Partner.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Partner = /*#__PURE__*/function () {
+  function Partner() {
+    _classCallCheck(this, Partner);
+  }
+
+  _createClass(Partner, null, [{
+    key: "all",
+    value: function all(then) {
+      return axios.get('/api/partners').then(function (_ref) {
+        var data = _ref.data;
+        return then(data);
+      });
+    }
+  }]);
+
+  return Partner;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Partner);
 
 /***/ }),
 

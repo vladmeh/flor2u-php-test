@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import router from './router';
 import App from "./App.vue";
+import Partner from "./model/Partner";
 
 require('./bootstrap');
 
@@ -12,6 +13,17 @@ Vue.filter('currencyRub', function (value) {
 });
 
 new Vue({
+    data: {
+        partners: [],
+        statuses: {
+            0: "новый",
+            10: "подтвержден",
+            20: "завершен"
+        },
+    },
+    created(){
+        Partner.all(({data}) => this.partners = data);
+    },
     router,
     render: h => h(App)
 }).$mount('#app');

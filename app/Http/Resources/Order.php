@@ -20,7 +20,7 @@ class Order extends JsonResource
             'id' => $this->id,
             'status' => $this->status,
             'client_email' => $this->client_email,
-            'delivery_dt' => $this->delivery_dt,
+            'partner_id' => $this->partner_id,
             'partner' => PartnerResource::make($this->partner),
             'products' => OrderProductsCollection::make($this->products),
         ];

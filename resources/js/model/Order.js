@@ -1,15 +1,17 @@
 class Order {
-    static all(then) {
-        return fetch('/api/orders', {
-            cache: "no-cache"
-        }).then((response) => {
-            return response.json();
-        }).then(({data}) => then(data));
+    static find(id, callback) {
+        return axios
+            .get('/api/orders/' + id)
+            .then(response => {
+                callback(null, response.data);
+            })
+            .catch(error => {
+                callback(error, error.response.data);
+            });
     }
 
-    static getOrders(page, callback) {
+    static all(page, callback) {
         const params = {page};
-        console.log(params);
         axios
             .get('/api/orders', {params})
             .then(response => {

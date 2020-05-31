@@ -34,7 +34,7 @@
             <tr v-for="order in orders">
                 <td class="border px-4 py-2">
                     <router-link
-                            :to="{ name: 'order.show', params: { id: order.id } }"
+                            :to="{ name: 'order.show', params: { id: order.id, order: order } }"
                             class="flex hover:bg-gray-100 hover:shadow-outline items-center justify-center"
                     >{{ order.id }}</router-link>
                 </td>
@@ -43,7 +43,7 @@
                 <td class="border px-4 py-2">
                     <div v-for="product in order.products" v-text="product.name"></div>
                 </td>
-                <td class="border px-4 py-2" v-text="statuses[order.status]"></td>
+                <td class="border px-4 py-2" v-text="$root.statuses[order.status]"></td>
             </tr>
             </tbody>
         </table>
@@ -64,11 +64,6 @@
                     last: null,
                     next: null,
                     prev: null,
-                },
-                statuses: {
-                    0: "новый",
-                    10: "подтвержден",
-                    20: "завершен"
                 },
                 error: null,
             }
@@ -99,13 +94,13 @@
             },
         },
         beforeRouteEnter(to, from, next) {
-            Order.getOrders(to.query.page, (err, data) => {
+            Order.all(to.query.page, (err, data) => {
                 next(vm => vm.setData(err, data));
             });
         },
         beforeRouteUpdate(to, from, next){
             this.orders = this.links = this.meta = null;
-            Order.getOrders(to.query.page, (err, data) => {
+            Order.all(to.query.page, (err, data) => {
                 this.setData(err, data);
                 next();
             });

@@ -5,5 +5,5 @@
     "/not-found.bundle.js": "/not-found.bundle.js",
     "/order-edit.bundle.js": "/order-edit.bundle.js",
     "/orders.bundle.js": "/orders.bundle.js",
-    "/vendors~orders.bundle.js": "/vendors~orders.bundle.js"
+    "/vendors~order-edit.bundle.js": "/vendors~order-edit.bundle.js"
 }

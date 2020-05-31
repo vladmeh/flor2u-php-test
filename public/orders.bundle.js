@@ -75,11 +75,6 @@ __webpack_require__.r(__webpack_exports__);
         next: null,
         prev: null
       },
-      statuses: {
-        0: "новый",
-        10: "подтвержден",
-        20: "завершен"
-      },
       error: null
     };
   },
@@ -110,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-    _model_Order__WEBPACK_IMPORTED_MODULE_0__["default"].getOrders(to.query.page, function (err, data) {
+    _model_Order__WEBPACK_IMPORTED_MODULE_0__["default"].all(to.query.page, function (err, data) {
       next(function (vm) {
         return vm.setData(err, data);
       });
@@ -120,7 +115,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.orders = this.links = this.meta = null;
-    _model_Order__WEBPACK_IMPORTED_MODULE_0__["default"].getOrders(to.query.page, function (err, data) {
+    _model_Order__WEBPACK_IMPORTED_MODULE_0__["default"].all(to.query.page, function (err, data) {
       _this.setData(err, data);
 
       next();
@@ -237,7 +232,10 @@ var render = function() {
                     staticClass:
                       "flex hover:bg-gray-100 hover:shadow-outline items-center justify-center",
                     attrs: {
-                      to: { name: "order.show", params: { id: order.id } }
+                      to: {
+                        name: "order.show",
+                        params: { id: order.id, order: order }
+                      }
                     }
                   },
                   [_vm._v(_vm._s(order.id))]
@@ -271,7 +269,9 @@ var render = function() {
             _vm._v(" "),
             _c("td", {
               staticClass: "border px-4 py-2",
-              domProps: { textContent: _vm._s(_vm.statuses[order.status]) }
+              domProps: {
+                textContent: _vm._s(_vm.$root.statuses[order.status])
+              }
             })
           ])
         }),
@@ -406,24 +406,20 @@ var Order = /*#__PURE__*/function () {
   }
 
   _createClass(Order, null, [{
-    key: "all",
-    value: function all(then) {
-      return fetch('/api/orders', {
-        cache: "no-cache"
-      }).then(function (response) {
-        return response.json();
-      }).then(function (_ref) {
-        var data = _ref.data;
-        return then(data);
+    key: "find",
+    value: function find(id, callback) {
+      return axios.get('/api/orders/' + id).then(function (response) {
+        callback(null, response.data);
+      })["catch"](function (error) {
+        callback(error, error.response.data);
       });
     }
   }, {
-    key: "getOrders",
-    value: function getOrders(page, callback) {
+    key: "all",
+    value: function all(page, callback) {
       var params = {
         page: page
       };
-      console.log(params);
       axios.get('/api/orders', {
         params: params
       }).then(function (response) {

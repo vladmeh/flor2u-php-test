@@ -122,7 +122,7 @@
                 });
 
                 this.form.patch('/api/orders/' + this.order.id)
-                    .then(response => console.log(response));
+                    .then(response => this.$swal(response.message, '', 'success'));
             }
         }
     }

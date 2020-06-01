@@ -1,9 +1,12 @@
 import Vue from 'vue';
+import VueSwal from 'vue-swal'
 import router from './router';
 import App from "./App.vue";
 import Partner from "./model/Partner";
 
 require('./bootstrap');
+
+Vue.use(VueSwal);
 
 Vue.filter('currencyRub', function (value) {
     if (!value) {
@@ -21,7 +24,7 @@ new Vue({
             20: "завершен"
         },
     },
-    created(){
+    created() {
         Partner.all(({data}) => this.partners = data);
     },
     router,

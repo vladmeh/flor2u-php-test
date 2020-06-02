@@ -1,5 +1,5 @@
 <template>
-    <div v-if="order">
+    <div class="container mx-auto py-6" v-if="order">
         <h1 class="mb-3 text-3xl" v-text="'Заказ № ' + order.id"></h1>
         <div class="max-w-3xl px-12 py-8 shadow-lg">
             <h3 class="mb-3 text-xl font-medium">Состав заказа</h3>

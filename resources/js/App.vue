@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="flex flex-col h-screen">
         <header class="bg-blue-800 py-4 shadow-md">
             <nav class="container mx-auto flex items-center text-white">
                 <router-link :to="{ name: 'home' }" class="no-underline text-xl text-white mr-12">Главная</router-link>
@@ -9,11 +9,12 @@
                 </router-link>
             </nav>
         </header>
-        <div class="container mx-auto py-6">
+        <main class="flex flex-1">
             <transition name="fade">
                 <router-view></router-view>
             </transition>
-        </div>
+        </main>
+        <footer class="py-4 text-center text-gray-500 text-xs">&copy; 2020 - <a href="https://github.com/vlameh" target="_blank">VladMeh</a></footer>
     </div>
 </template>
 

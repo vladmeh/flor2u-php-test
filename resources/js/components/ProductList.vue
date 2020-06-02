@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container mx-auto py-6">
         <h1 class="mb-3 text-3xl">Список продутов</h1>
         <page-paginate :links="links" :meta="meta"></page-paginate>
         <table class="shadow-lg w-full table-auto">

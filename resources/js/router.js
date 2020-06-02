@@ -12,7 +12,7 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: () => import(/* webpackChunkName: "example.bundle" */'./components/ExampleComponent'),
+        component: () => import(/* webpackChunkName: "home.bundle" */'./components/Home'),
     },
     {
         path: '/orders',

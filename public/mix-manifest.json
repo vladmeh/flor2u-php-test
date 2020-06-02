@@ -1,8 +1,8 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/example.bundle.js": "/example.bundle.js",
-    "/not-found.bundle.js": "/not-found.bundle.js",
-    "/order-edit.bundle.js": "/order-edit.bundle.js",
-    "/orders.bundle.js": "/orders.bundle.js"
+    "/js/app.js": "/js/app.js?id=46a61b54afcd89a7b370",
+    "/css/app.css": "/css/app.css?id=48349e8ada95673c6c90",
+    "/home.bundle.js": "/home.bundle.js?id=83b0fb587c873273b930",
+    "/not-found.bundle.js": "/not-found.bundle.js?id=d4b5d27b853dee743cc7",
+    "/order-edit.bundle.js": "/order-edit.bundle.js?id=c30771ef34b2287d3818",
+    "/orders.bundle.js": "/orders.bundle.js?id=e405255bf004c6195255"
 }

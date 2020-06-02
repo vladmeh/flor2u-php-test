@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderUpdated;
+use App\Http\Requests\OrderUpdateRequest;
 use App\Http\Resources\Order as OrderResource;
 use App\Http\Resources\OrderCollection;
 use App\Order;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
 class OrderController extends Controller
 {
@@ -36,28 +36,16 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param OrderUpdateRequest $request
      * @param Order $order
      * @return JsonResponse
-     * @throws ValidationException
      */
-    public function update(Request $request, Order $order)
+    public function update(OrderUpdateRequest $request, Order $order)
     {
-        $attributes = $this->validate($request, [
-            'client_email' => 'required|email',
-            'partner_id' => 'required',
-            'status' => 'required|numeric|in:0,10,20'
-        ], [
-            'required' => 'поле :attribute не должно быть пустым',
-            'email' => 'Некорректный email адрес',
-        ], [
-            'client_email' => 'Клиент',
-            'partner_id' => 'Партнер',
-            'status' => 'Статус'
-        ]);
+        $order->update($request->validated());
 
-        $order->update($attributes);
+        event(new OrderUpdated($order));
 
-        return response()->json(['message' => 'Заказ № ' . $order->id . 'успешно обновлен']);
+        return response()->json(['message' => 'Заказ № ' . $order->id . ' успешно обновлен']);
     }
 }

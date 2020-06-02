@@ -37,6 +37,51 @@ class ProductControllerTest extends TestCase
             ]);
     }
 
+    /**
+     * @test
+     */
+    public function it_can_be_update_product_price()
+    {
+        $data = [
+            'price' => '2222'
+        ];
+
+        $product = Product::find(1);
+
+        $this->patch('/api/products/1', $data)
+            ->assertSessionHasNoErrors()
+            ->assertOk()
+            ->assertJson(['message' => $product->name . ' успешно обновлен']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_return_error_required_data()
+    {
+        $data = [
+            'price' => ''
+        ];
+
+        $this->patch('/api/products/1', $data)
+            ->assertSessionHasErrors(['price'])
+            ->assertStatus(302);
+    }
+
+    /**
+     * @test
+     */
+    public function it_return_error_invalid_data()
+    {
+        $data = [
+            'price' => 'abc'
+        ];
+
+        $this->patch('/api/products/1', $data)
+            ->assertSessionHasErrors(['price'])
+            ->assertStatus(302);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();

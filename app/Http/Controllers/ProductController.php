@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\Product as ProductResource;
 use App\Http\Resources\ProductCollection;
 use App\Product;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -27,5 +29,21 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return new ProductResource($product);
+    }
+
+    /**
+     * @param Request $request
+     * @param Product $product
+     * @return JsonResponse
+     */
+    public function update(Request $request, Product $product)
+    {
+        $attributes = $request->validate([
+            'price' => 'required|numeric'
+        ]);
+
+        $product->update($attributes);
+
+        return response()->json(['message' => $product->name . ' успешно обновлен']);
     }
 }

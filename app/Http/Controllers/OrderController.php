@@ -58,6 +58,6 @@ class OrderController extends Controller
 
         $order->update($attributes);
 
-        return response()->json(['message' => 'Заказ успешно обновлен']);
+        return response()->json(['message' => 'Заказ № ' . $order->id . 'успешно обновлен']);
     }
 }

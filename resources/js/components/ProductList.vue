@@ -16,7 +16,14 @@
                 <td class="border px-4 py-2" v-text="product.id"></td>
                 <td class="border px-4 py-2" v-text="product.name"></td>
                 <td class="border px-4 py-2" v-text="product.vendor.name"></td>
-                <td class="border px-4 py-2" v-text="product.price"></td>
+                <td contenteditable
+                    :id="'p' + product.id"
+                    class="border px-4 py-2"
+                    v-text="product.price"
+                    @focus="startEdit($event)"
+                    @blur="onEdit(product.id, $event)"
+                    @keydown.enter="endEdit(product.id)"
+                ></td>
             </tr>
             </tbody>
         </table>
@@ -26,12 +33,14 @@
 <script>
     import Product from "../model/Product";
     import PagePaginate from "./PagePaginate";
+    import Form from "../utilites/Form";
 
     export default {
         name: "ProductList",
         data() {
             return {
                 products: [],
+                currentPriceEdit: null,
                 meta: null,
                 links: {
                     first: null,
@@ -64,6 +73,27 @@
                     this.meta = meta;
                 }
             },
+            startEdit(element) {
+                this.currentPriceEdit = element.target.innerText;
+            },
+            onEdit(id, element) {
+                element.target.blur();
+                let newPrice = isNaN(parseInt(element.target.innerText)) ? this.currentPriceEdit : parseInt(element.target.innerText);
+                element.target.innerText = newPrice.toString();
+                if (newPrice.toString() !== this.currentPriceEdit) {
+                    this.onSubmit(id, newPrice);
+                }
+            },
+            endEdit(id) {
+                this.$el.querySelector('#p' + id).blur()
+            },
+            onSubmit(id, price) {
+                new Form({
+                    price: price
+                })
+                    .patch('/api/products/' + id)
+                    .then(response => this.$swal(response.message, '', 'success'))
+            }
         },
         components: {
             PagePaginate

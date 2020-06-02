@@ -228,6 +228,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _model_Product__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../model/Product */ "./resources/js/model/Product.js");
 /* harmony import */ var _PagePaginate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PagePaginate */ "./resources/js/components/PagePaginate.vue");
+/* harmony import */ var _utilites_Form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utilites/Form */ "./resources/js/utilites/Form.js");
 //
 //
 //
@@ -253,6 +254,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -260,6 +269,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       products: [],
+      currentPriceEdit: null,
       meta: null,
       links: {
         first: null,
@@ -300,6 +310,30 @@ __webpack_require__.r(__webpack_exports__);
         this.links = links;
         this.meta = meta;
       }
+    },
+    startEdit: function startEdit(element) {
+      this.currentPriceEdit = element.target.innerText;
+    },
+    onEdit: function onEdit(id, element) {
+      element.target.blur();
+      var newPrice = isNaN(parseInt(element.target.innerText)) ? this.currentPriceEdit : parseInt(element.target.innerText);
+      element.target.innerText = newPrice.toString();
+
+      if (newPrice.toString() !== this.currentPriceEdit) {
+        this.onSubmit(id, newPrice);
+      }
+    },
+    endEdit: function endEdit(id) {
+      this.$el.querySelector('#p' + id).blur();
+    },
+    onSubmit: function onSubmit(id, price) {
+      var _this2 = this;
+
+      new _utilites_Form__WEBPACK_IMPORTED_MODULE_2__["default"]({
+        price: price
+      }).patch('/api/products/' + id).then(function (response) {
+        return _this2.$swal(response.message, '', 'success');
+      });
     }
   },
   components: {
@@ -765,7 +799,25 @@ var render = function() {
               _vm._v(" "),
               _c("td", {
                 staticClass: "border px-4 py-2",
-                domProps: { textContent: _vm._s(product.price) }
+                attrs: { contenteditable: "", id: "p" + product.id },
+                domProps: { textContent: _vm._s(product.price) },
+                on: {
+                  focus: function($event) {
+                    return _vm.startEdit($event)
+                  },
+                  blur: function($event) {
+                    return _vm.onEdit(product.id, $event)
+                  },
+                  keydown: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.endEdit(product.id)
+                  }
+                }
               })
             ])
           }),
